@@ -1,13 +1,13 @@
 // Core
 import React, { Component } from 'react';
 
-import Post from '../../component/Post';
+import Feed from '../../component/Feed';
 
 export default class App extends Component {
 
     render () {
         return (
-            <Post />
+            <Feed />
         );
     }
 }

@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import avatar from '../../theme/assets/homer.png';
 
+import styles from './styles.m.css';
+
 export default class App extends Component {
     render () {
         return (
