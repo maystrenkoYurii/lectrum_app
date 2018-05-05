@@ -1,13 +1,22 @@
 
 import React, { Component } from 'react';
-import avatar from '../../theme/assets/homer.png';
+import PropTypes from 'prop-types';
 
 import moment from 'moment';
 
 import styles from './styles.m.css';
 
 export default class Post extends Component {
+
+    static propTypes = {
+        avatar:               PropTypes.string.isRequired,
+        currentUserFirstName: PropTypes.string.isRequired,
+        currentUserLastName:  PropTypes.string.isRequired,
+    };
+
     render () {
+        const { avatar, currentUserFirstName, currentUserLastName } = this.props;
+
         return (
             <section className = { styles.post }>
                 <form>
