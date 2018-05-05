@@ -1,28 +1,26 @@
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Consumer } from '../HOC/withProfile';
 
 import styles from './styles.m.css';
 
 export default class Composer extends Component {
-
-    static propTypes = {
-        avatar:               PropTypes.string.isRequired,
-        currentUserFirstName: PropTypes.string.isRequired,
-    };
-
     render () {
 
-        const { avatar, currentUserFirstName } = this.props;
-
         return (
-            <section className = { styles.composer }>
-                <form>
-                    <img alt = 'homer' src = { avatar } />
-                    <textarea placeholder = { currentUserFirstName } />
-                    <input type = 'submit' value = 'Post' />
-                </form>
-            </section>
+            <Consumer>
+                {
+                    ({ avatar, currentUserFirstName }) => (
+                        <section className = { styles.composer }>
+                            <form>
+                                <img alt = 'homer' src = { avatar } />
+                                <textarea placeholder = { currentUserFirstName } />
+                                <input type = 'submit' value = 'Post' />
+                            </form>
+                        </section>
+                    )
+                }
+            </Consumer>
         );
     }
 }

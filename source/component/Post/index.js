@@ -17,7 +17,7 @@ export default class Post extends Component {
     render () {
         const { avatar, currentUserFirstName, currentUserLastName } = this.props;
 
-        const user = currentUserFirstName + ' ' + currentUserLastName;
+        const user = `${currentUserFirstName} ${currentUserLastName}`;
 
         return (
             <section className = { styles.post }>

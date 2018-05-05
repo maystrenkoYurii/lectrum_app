@@ -1,5 +1,6 @@
 // Core
 import React, { Component } from 'react';
+import { Provider } from '../../component/HOC/withProfile';
 
 import Feed from '../../component/Feed';
 
@@ -14,7 +15,9 @@ const config = {
 export default class App extends Component {
     render () {
         return (
-            <Feed { ...config } />
+            <Provider value = { config }>
+                <Feed { ...config } />
+            </Provider>
         );
     }
 }
