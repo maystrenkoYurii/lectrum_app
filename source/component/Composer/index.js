@@ -7,7 +7,7 @@ import styles from './styles.m.css';
 export default class App extends Component {
     render () {
         return (
-            <section>
+            <section className = { styles.composer }>
                 <form>
                     <img alt = 'homer' src = { avatar } />
                     <textarea placeholder = { 'placeholder' } />
