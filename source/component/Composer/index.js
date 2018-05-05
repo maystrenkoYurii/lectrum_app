@@ -1,16 +1,25 @@
 
 import React, { Component } from 'react';
-import avatar from '../../theme/assets/homer.png';
+import PropTypes from 'prop-types';
 
 import styles from './styles.m.css';
 
-export default class App extends Component {
+export default class Composer extends Component {
+
+    static propTypes = {
+        avatar:               PropTypes.string.isRequired,
+        currentUserFirstName: PropTypes.string.isRequired,
+    };
+
     render () {
+
+        const { avatar, currentUserFirstName } = this.props;
+
         return (
             <section className = { styles.composer }>
                 <form>
                     <img alt = 'homer' src = { avatar } />
-                    <textarea placeholder = { 'placeholder' } />
+                    <textarea placeholder = { currentUserFirstName } />
                     <input type = 'submit' value = 'Post' />
                 </form>
             </section>
