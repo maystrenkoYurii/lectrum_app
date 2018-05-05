@@ -8,8 +8,9 @@ export default class App extends Component {
             <section>
                 <form>
                     <img alt = 'homer' src = { avatar } />
-                    <textarea placeholder = { 'placeholder' } />
-                    <input type = 'submit' value = 'Post' />
+                    <a>Комент</a>
+                    <time>Врем`я</time>
+                    <p>Комент</p>
                 </form>
             </section>
         );
