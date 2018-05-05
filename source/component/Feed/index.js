@@ -22,7 +22,11 @@ export default class Feed extends Component {
         return (
             <section className = { styles.feed }>
                 <Composer avatar = { avatar } currentUserFirstName = { currentUserFirstName } />
-                <Post currentUserLastName = { currentUserLastName } />
+                <Post
+                    avatar = { avatar }
+                    currentUserFirstName = { currentUserFirstName }
+                    currentUserLastName = { currentUserLastName }
+                />
             </section>
         );
     }
