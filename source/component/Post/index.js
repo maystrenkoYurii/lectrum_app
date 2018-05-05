@@ -17,11 +17,13 @@ export default class Post extends Component {
     render () {
         const { avatar, currentUserFirstName, currentUserLastName } = this.props;
 
+        const user = currentUserFirstName + ' ' + currentUserLastName;
+
         return (
             <section className = { styles.post }>
                 <form>
                     <img alt = 'homer' src = { avatar } />
-                    <a>Юрій</a>
+                    <a>{ user }</a>
                     <time>Час: {moment().format('MMMM D h:mm:ss a')}</time>
                     <p>Комент</p>
                 </form>
