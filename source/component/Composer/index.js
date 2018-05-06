@@ -18,6 +18,7 @@ export default class Composer extends Component {
         };
         this.changeComment = ::this._changeComment;
         this.handleSubmit = ::this._handleSubmit;
+        this.copyDisable = ::this._copyDisable;
     }
 
     _changeComment = (event) => {
@@ -35,6 +36,10 @@ export default class Composer extends Component {
         }
     };
 
+    _copyDisable = (event) => {
+        event.preventDefault()
+    };
+
     render () {
 
         return (
@@ -44,7 +49,12 @@ export default class Composer extends Component {
                         <section className = { styles.composer }>
                             <form onSubmit = { this.handleSubmit }>
                                 <img alt = 'homer' src = { avatar } />
-                                <textarea placeholder = { currentUserFirstName } value = { this.state.coment } onChange = { this.changeComment } />
+                                <textarea
+                                    placeholder = { currentUserFirstName }
+                                    value = { this.state.coment }
+                                    onChange = { this.changeComment }
+                                    onCopy = { this.copyDisable }
+                                />
                                 <input type = 'submit' value = 'Post' />
                             </form>
                         </section>
