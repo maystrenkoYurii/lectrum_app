@@ -7,6 +7,8 @@ import Feed from '../../component/Feed';
 
 import avatar from '../../theme/assets/homer.png';
 
+import Catcher from '../../component/Catcher';
+
 const config = {
     avatar,
     currentUserFirstName: 'Yuri',
@@ -17,9 +19,11 @@ const config = {
 export default class App extends Component {
     render () {
         return (
-            <Provider value = { config }>
-                <Feed { ...config } />
-            </Provider>
+            <Catcher>
+                <Provider value = { config }>
+                    <Feed { ...config } />
+                </Provider>
+            </Catcher>
         );
     }
 }

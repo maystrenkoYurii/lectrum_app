@@ -29,7 +29,10 @@ export default class Composer extends Component {
         const { coment } = this.state;
         const { createPost } = this.props;
 
-        createPost(coment);
+        if (coment) {
+            createPost(coment);
+            this.setState({ coment: '' });
+        }
     };
 
     render () {
