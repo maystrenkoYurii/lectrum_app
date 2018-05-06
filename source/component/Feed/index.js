@@ -27,7 +27,7 @@ export default class Feed extends Component {
 
     _createPost = (newPost) => {
         this.setState(({ post }) => ({
-            post: [...post, { id: getUniqueID(), newPost }],
+            post: [{ id: getUniqueID(), coment: newPost }, ...post],
         }));
     };
 
@@ -36,15 +36,15 @@ export default class Feed extends Component {
         const { avatar, currentUserFirstName, currentUserLastName } = this.props;
         const { post } = this.state;
 
-        const renderPost = post.map(({ id, coment }) => {
+        const renderPost = post.map(({ id, coment }) => (
             <Post
-                key = { id }
-                coment = { coment }
                 avatar = { avatar }
+                coment = { coment }
                 currentUserFirstName = { currentUserFirstName }
                 currentUserLastName = { currentUserLastName }
+                key = { id }
             />
-        });
+        ));
 
         return (
             <section className = { styles.feed }>
