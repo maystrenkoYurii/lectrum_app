@@ -10,9 +10,12 @@ export default class Post extends Component {
 
     static propTypes = {
         avatar:               PropTypes.string.isRequired,
-        coment:               PropTypes.string.isRequired,
+        comment:              PropTypes.string.isRequired,
+        created:              PropTypes.number.isRequired,
         currentUserFirstName: PropTypes.string.isRequired,
         currentUserLastName:  PropTypes.string.isRequired,
+        firstName:            PropTypes.string.isRequired,
+        lastName:             PropTypes.string.isRequired,
     };
 
     shouldComponentUpdate (nextProps) {
@@ -27,17 +30,17 @@ export default class Post extends Component {
     }
 
     render () {
-        const { avatar, currentUserFirstName, currentUserLastName, coment } = this.props;
+        const { avatar, currentUserFirstName, currentUserLastName, comment, created, firstName, lastName } = this.props;
 
-        const user = `${currentUserFirstName} ${currentUserLastName}`;
+        const user = `${firstName} ${lastName}`;
 
         return (
             <section className = { styles.post }>
                 <form>
                     <img alt = 'homer' src = { avatar } />
                     <a>{ user }</a>
-                    <time>Час: {moment().format('MMMM D h:mm:ss a')}</time>
-                    <p>{ coment }</p>
+                    <time>Час: {created}</time>
+                    <p>{ comment }</p>
                 </form>
             </section>
         );
