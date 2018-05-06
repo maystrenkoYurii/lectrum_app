@@ -37,7 +37,13 @@ export default class Composer extends Component {
     };
 
     _copyDisable = (event) => {
-        event.preventDefault()
+        event.preventDefault();
+    };
+
+    _keyEnter = (event) => {
+        if (event.keyCode === 13) {
+            this.handleSubmit(event);
+        }
     };
 
     render () {
@@ -54,6 +60,7 @@ export default class Composer extends Component {
                                     value = { this.state.coment }
                                     onChange = { this.changeComment }
                                     onCopy = { this.copyDisable }
+                                    onKeyDown = { this._keyEnter }
                                 />
                                 <input type = 'submit' value = 'Post' />
                             </form>
