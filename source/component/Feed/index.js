@@ -7,6 +7,7 @@ import Composer from '../../component/Composer';
 import StatusBar from '../../component/StatusBar';
 
 import styles from './styles.m.css';
+import {getUniqueID} from "../../instruments/index";
 
 export default class Feed extends Component {
 
@@ -16,7 +17,7 @@ export default class Feed extends Component {
         currentUserLastName:  PropTypes.string.isRequired,
     };
 
-    constructor(props) {
+    constructor (props) {
         super(props);
         this.state = {
             post: [],
@@ -26,7 +27,7 @@ export default class Feed extends Component {
 
     _createPost = (newPost) => {
         this.setState(({ post }) => ({
-            post: post.push(newPost),
+            post: [...post, { id: getUniqueID(), newPost }],
         }));
     };
 
@@ -37,7 +38,7 @@ export default class Feed extends Component {
         return (
             <section className = { styles.feed }>
                 <StatusBar />
-                <Composer />
+                <Composer createPost = { this.createPost } />
                 <Post
                     avatar = { avatar }
                     currentUserFirstName = { currentUserFirstName }
