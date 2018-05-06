@@ -7,7 +7,11 @@ import Composer from '../../component/Composer';
 import StatusBar from '../../component/StatusBar';
 
 import styles from './styles.m.css';
-import {getUniqueID} from "../../instruments/index";
+
+import Catcher from '../../component/Catcher';
+import { getUniqueID } from "../../instruments/index";
+
+import CountPost from '../../component/CountPost';
 
 export default class Feed extends Component {
 
@@ -37,20 +41,21 @@ export default class Feed extends Component {
         const { post } = this.state;
 
         const renderPost = post.map(({ id, coment }) => (
-            <Post
-                avatar = { avatar }
-                coment = { coment }
-                currentUserFirstName = { currentUserFirstName }
-                currentUserLastName = { currentUserLastName }
-                key = { id }
-            />
+            <Catcher key = { id }>
+                <Post
+                    avatar = { avatar }
+                    coment = { coment }
+                    currentUserFirstName = { currentUserFirstName }
+                    currentUserLastName = { currentUserLastName }
+                />
+            </Catcher>
         ));
 
         return (
             <section className = { styles.feed }>
                 <StatusBar />
                 <Composer createPost = { this.createPost } />
-                {renderPost}
+                <CountPost count = { renderPost.length } >{renderPost}</CountPost>
             </section>
         );
     }

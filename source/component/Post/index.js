@@ -15,6 +15,17 @@ export default class Post extends Component {
         currentUserLastName:  PropTypes.string.isRequired,
     };
 
+    shouldComponentUpdate (nextProps) {
+        if (this.props.avatar !== nextProps.avatar &&
+            this.props.coment !== nextProps.coment &&
+            this.props.currentUserFirstName !== nextProps.currentUserFirstName &&
+            this.props.currentUserLastName !== nextProps.currentUserLastName) {
+            return true;
+        }
+
+        return false;
+    }
+
     render () {
         const { avatar, currentUserFirstName, currentUserLastName, coment } = this.props;
 
