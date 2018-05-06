@@ -5,15 +5,20 @@ import { Consumer } from '../HOC/withProfile';
 import styles from './styles.m.css';
 
 export default class Composer extends Component {
-    render () {
 
-        state = {
+    constructor(props) {
+        super(props);
+        this.state = {
             coment: 'coment',
         };
+        this.changeComment = ::this._changeComment;
+    }
 
-        changeComment = (event) => {
-            this.setState({ coment: event.target.value });
-        };
+    _changeComment = (event) => {
+        this.setState({ coment: event.target.value });
+    };
+
+    render () {
 
         return (
             <Consumer>

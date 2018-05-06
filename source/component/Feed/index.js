@@ -16,6 +16,20 @@ export default class Feed extends Component {
         currentUserLastName:  PropTypes.string.isRequired,
     };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            post: [],
+        };
+        this.createPost = ::this._createPost;
+    }
+
+    _createPost = (newPost) => {
+        this.setState(({ post }) => ({
+            post: post.push(newPost),
+        }));
+    };
+
     render () {
 
         const { avatar, currentUserFirstName, currentUserLastName } = this.props;
