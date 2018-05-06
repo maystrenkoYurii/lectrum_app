@@ -34,6 +34,15 @@ export default class Feed extends Component {
     render () {
 
         const { avatar, currentUserFirstName, currentUserLastName } = this.props;
+        const { post } = this.state;
+        
+        const renderPost = post.map((post, index) => {
+            <Post
+                avatar = { avatar }
+                currentUserFirstName = { currentUserFirstName }
+                currentUserLastName = { currentUserLastName }
+            />
+        });
 
         return (
             <section className = { styles.feed }>
@@ -43,6 +52,7 @@ export default class Feed extends Component {
                     avatar = { avatar }
                     currentUserFirstName = { currentUserFirstName }
                     currentUserLastName = { currentUserLastName }
+                    posts = { this.state.post }
                 />
             </section>
         );

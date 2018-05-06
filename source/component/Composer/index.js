@@ -17,13 +17,15 @@ export default class Composer extends Component {
             coment: 'coment',
         };
         this.changeComment = ::this._changeComment;
+        this.handleSubmit = ::this._handleSubmit;
     }
 
     _changeComment = (event) => {
         this.setState({ coment: event.target.value });
     };
 
-    createPost = () => {
+    _handleSubmit = (e) => {
+        e.preventDefault();
         const { coment } = this.state;
         const { createPost } = this.props;
 
@@ -37,7 +39,7 @@ export default class Composer extends Component {
                 {
                     ({ avatar, currentUserFirstName }) => (
                         <section className = { styles.composer }>
-                            <form onSubmit = { this.createPost }>
+                            <form onSubmit = { this.handleSubmit }>
                                 <img alt = 'homer' src = { avatar } />
                                 <textarea placeholder = { currentUserFirstName } value = { this.state.coment } onChange = { this.changeComment } />
                                 <input type = 'submit' value = 'Post' />
