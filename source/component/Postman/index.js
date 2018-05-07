@@ -32,14 +32,15 @@ export default class Spinner extends Component {
 
         const hello = `Привет ${currentUserFirstName} ${currentUserLastName}`;
 
-        if (!open)
-            return null;
+        if (open) {
+            return (
+                <div className = { Styles.postman }>
+                    <img src = { avatar } />
+                    <span>{ hello }</span>
+                </div>
+            );
+        }
 
-        return (
-            <div className = { Styles.postman }>
-                <img src = { avatar } />
-                <span>{ hello }</span>
-            </div>
-        );
+        return null;
     };
 }
