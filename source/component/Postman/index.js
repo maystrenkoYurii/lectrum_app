@@ -4,23 +4,40 @@ import PropTypes from 'prop-types';
 import Styles from './styles.m.css';
 
 
-export class Spinner extends Component {
+export default class Spinner extends Component {
     static propTypes = {
         avatar:               PropTypes.string.isRequired,
         currentUserFirstName: PropTypes.string.isRequired,
         currentUserLastName:  PropTypes.string.isRequired,
     };
 
+    constructor (props) {
+        super(props);
+        this.state = {
+            open: true,
+        };
+    }
+
+    componentDidMount () {
+        setTimeout(this.close, 1000);
+    }
+
+    close = () => {
+        this.setState({ open: false });
+    };
+
     render () {
 
-        const { avatar, currentUserFirstName, currentUserLastName } = this.props;
+        const { avatar, currentUserFirstName, currentUserLastName, open } = this.props;
 
-        const hollo = `Привет ${currentUserFirstName} ${currentUserLastName}`;
+        const hello = `Привет ${currentUserFirstName} ${currentUserLastName}`;
+
+        if (!open) return null;
 
         return (
             <div className = { Styles.postman }>
                 <img src = { avatar } />
-                { hollo }
+                <span>{ hello }</span>
             </div>
         );
     };

@@ -12,5 +12,5 @@ export class Spinner extends Component {
         return createPortal(
             isSpinning ? <div className = { Styles.spinner } /> : null, portal
         );
-    };
+    }
 }

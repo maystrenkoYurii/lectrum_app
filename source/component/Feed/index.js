@@ -222,7 +222,7 @@ export default class Feed extends Component {
                 <Transition
                     appear
                     in
-                    timeaut = { 100 }
+                    timeout = { 100 }
                     onEnter = { this._handleComposerAppear }>
                     <Composer createPost = { this.createPost } />
                 </Transition>
@@ -230,7 +230,7 @@ export default class Feed extends Component {
                 <Transition
                     appear
                     in
-                    timeaut = { 100 }
+                    timeout = { 100 }
                     onEnter = { this._handleCounterAppear }>
                     <Counter count = { renderPost.length } />
                 </Transition>
