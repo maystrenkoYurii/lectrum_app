@@ -2,7 +2,7 @@ import React, { Component, createContext } from 'react';
 
 const { Provider, Consumer } = createContext();
 
-const withProfile = (Enchanced) => {
+const withProfile = (Enchanced) =>
     class WithConsumer extends Component {
         render () {
             return (
@@ -11,7 +11,6 @@ const withProfile = (Enchanced) => {
                 </Consumer>
             );
         }
-    }
-};
+    };
 
 export { Provider, Consumer, withProfile };

@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import cx from 'classnames';
 
 import styles from './styles.m.css';
 
@@ -33,6 +34,11 @@ export default class StatusBar extends Component {
         //const { avatar, currentUserFirstName, currentUserLastName } = this.props;
         const { online } = this.state;
 
+        const statusStyle = cx(styles.status, {
+            [styles.online]:  online,
+            [styles.offline]: !online,
+        });
+
         const statusMsg = online ? 'Online' : 'Ofline';
 
         return (
@@ -40,16 +46,16 @@ export default class StatusBar extends Component {
                 {
                     ({ avatar, currentUserFirstName, currentUserLastName } = {}) => (
                         <section className = { styles.statusBar }>
-                            <div className = { styles.offline }>
-                                <div>{statusMsg}</div>
+                            <div className = { statusStyle }>
+                                <div>{ statusMsg }</div>
                                 <span />
-                                <button>
-                                    <img alt = 'avatar' src = { avatar } />
-                                    <span>{ currentUserFirstName }</span>
-                                    &nbsp;
-                                    <span>{ currentUserLastName }</span>
-                                </button>
                             </div>
+                            <button>
+                                <img alt = 'avatar' src = { avatar } />
+                                <span>{ currentUserFirstName }</span>
+                                &nbsp;
+                                <span>{ currentUserLastName }</span>
+                            </button>
                         </section>
                     )
                 }

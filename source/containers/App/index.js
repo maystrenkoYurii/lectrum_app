@@ -11,8 +11,8 @@ import Catcher from '../../component/Catcher';
 
 const config = {
     avatar,
-    currentUserFirstName: 'Yuri',
-    currentUserLastName:  'Maystrenko',
+    currentUserFirstName: 'Юрий',
+    currentUserLastName:  'Майстренко',
 };
 
 @hot(module)

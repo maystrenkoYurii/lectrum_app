@@ -1,14 +1,16 @@
 
 import React, { Component } from 'react';
-import { Consumer } from '../HOC/withProfile';
 import PropTypes from 'prop-types';
+import { withProfile } from '../HOC/withProfile';
 
 import styles from './styles.m.css';
 
-export default class Composer extends Component {
+class Composer extends Component {
 
     static propTypes = {
-        createPost: PropTypes.func.isRequired,
+        avatar:               PropTypes.string.isRequired,
+        createPost:           PropTypes.func.isRequired,
+        currentUserFirstName: PropTypes.string.isRequired,
     };
 
     constructor (props) {
@@ -47,27 +49,24 @@ export default class Composer extends Component {
     };
 
     render () {
+        const { avatar, currentUserFirstName } = this.props;
 
         return (
-            <Consumer>
-                {
-                    ({ avatar, currentUserFirstName }) => (
-                        <section className = { styles.composer }>
-                            <form onSubmit = { this.handleSubmit }>
-                                <img alt = 'homer' src = { avatar } />
-                                <textarea
-                                    placeholder = { currentUserFirstName }
-                                    value = { this.state.coment }
-                                    onChange = { this.changeComment }
-                                    onCopy = { this.copyDisable }
-                                    onKeyDown = { this._keyEnter }
-                                />
-                                <input type = 'submit' value = 'Post' />
-                            </form>
-                        </section>
-                    )
-                }
-            </Consumer>
+            <section className = { styles.composer }>
+                <form onSubmit = { this.handleSubmit }>
+                    <img alt = 'homer' src = { avatar } />
+                    <textarea
+                        placeholder = { currentUserFirstName }
+                        value = { this.state.coment }
+                        onChange = { this.changeComment }
+                        onCopy = { this.copyDisable }
+                        onKeyDown = { this._keyEnter }
+                    />
+                    <input type = 'submit' value = 'Post' />
+                </form>
+            </section>
         );
     }
 }
+
+export default withProfile(Composer);
