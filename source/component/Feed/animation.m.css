@@ -1,0 +1,21 @@
+.enter {
+    transform: scale(.5) rotate(0deg);
+    opacity: 0.01;
+}
+
+.enterActive {
+    opacity: 1;
+    transform: scale(1) rotate(360deg);
+    transition: opacity 500ms ease-in, transform 500ms ease-in;
+}
+
+.exampleExit {
+    opacity: 1;
+    transform: scale(1) rotate(360deg);
+}
+
+.exampleExitActive {
+    transform: scale(.5) rotate(0deg);
+    opacity: 0.01;
+    transition: opacity 300ms ease-in, transform 300ms ease-in;
+}

@@ -5,11 +5,13 @@ import PropTypes from 'prop-types';
 import Post from '../../component/Post';
 import Composer from '../../component/Composer';
 import StatusBar from '../../component/StatusBar';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import { api, TOKEN, GROUP_ID } from "../../config/api";
 import { socket } from '../../socket';
 
 import styles from './styles.m.css';
+import animation from './animation.m.css';
 
 import Catcher from '../../component/Catcher';
 
@@ -31,6 +33,7 @@ export default class Feed extends Component {
         this.createPost = ::this._createPost;
         this.fetchPost = ::this._fetchPost;
         this.removePost = ::this._removePost;
+        this.createPostLike = ::this._createPostLike;
     }
 
     componentDidMount () {
@@ -64,7 +67,6 @@ export default class Feed extends Component {
 
 
     _createPost = (comment) => {
-        console.log(comment);
         fetch(api, {
             method: 'POST',
             headers: {
@@ -87,6 +89,30 @@ export default class Feed extends Component {
                 }));
             });
     };
+
+    async _createPostLike (id) {
+        try {
+            const responce = await fetch(`${api}/${id}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization:  TOKEN,
+                },
+            });
+
+
+            if (responce.status !== 200) {
+                throw new Error('Delete post filed');
+            }
+
+            const { data } = await responce.json();
+
+            this.setState(({ posts }) => ({
+                posts: posts.map((post) => post.id === id ? data : post),
+            }));
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     async _removePost (id) {
         try {
@@ -135,22 +161,38 @@ export default class Feed extends Component {
         const { currentUserFirstName, currentUserLastName } = this.props;
 
         const renderPost = posts.map((post) => (
-            <Catcher key = { post.id }>
-                <Post
-                    { ...post }
-                    currentUserFirstName = { currentUserFirstName }
-                    currentUserLastName = { currentUserLastName }
-                    id = { post.id }
-                    removePost = { this.removePost }
-                />
-            </Catcher>
+            <CSSTransition
+                classNames = { {
+                    enter:       animation.enter,
+                    enterActive: animation.enterActive,
+                    exit:        animation.exampleExit,
+                    exitActive:  animation.exampleExitActive,
+                } }
+
+                key = { post.id }
+                timeout = { { enter: 550, exit: 550 } }>
+                <Catcher>
+                    <Post
+                        { ...post }
+                        currentUserFirstName = { currentUserFirstName }
+                        currentUserLastName = { currentUserLastName }
+                        id = { post.id }
+                        likePost = { this.createPostLike }
+                        removePost = { this.removePost }
+                    />
+                </Catcher>
+            </CSSTransition>
         ));
 
         return (
             <section className = { styles.feed }>
                 <StatusBar />
                 <Composer createPost = { this.createPost } />
-                <CountPost count = { renderPost.length } >{renderPost}</CountPost>
+                <CountPost count = { renderPost.length } >
+                    <TransitionGroup>
+                        {renderPost}
+                    </TransitionGroup>
+                </CountPost>
             </section>
         );
     }

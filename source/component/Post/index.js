@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Like from '../../component/Like';
+
 import styles from './styles.m.css';
 
 export default class Post extends Component {
@@ -15,6 +17,7 @@ export default class Post extends Component {
         firstName:            PropTypes.string.isRequired,
         id:                   PropTypes.string.isRequired,
         lastName:             PropTypes.string.isRequired,
+        likePost:             PropTypes.func.isRequired,
         removePost:           PropTypes.func.isRequired,
     };
 
@@ -37,7 +40,7 @@ export default class Post extends Component {
     };
 
     render () {
-        const { avatar, comment, created, firstName, lastName } = this.props;
+        const { avatar, comment, created, firstName, lastName, currentUserFirstName, currentUserLastName, id, likePost } = this.props;
 
         const user = `${firstName} ${lastName}`;
 
@@ -48,6 +51,13 @@ export default class Post extends Component {
                 <a>{ user }</a>
                 <time>Час: {created}</time>
                 <p>{ comment }</p>
+                <Like
+                    currentUserFirstName = { currentUserFirstName }
+                    currentUserLastName = { currentUserLastName }
+                    id = { id }
+                    likePost = { likePost }
+                    likes = { this.props.likes }
+                />
             </section>
         );
     }

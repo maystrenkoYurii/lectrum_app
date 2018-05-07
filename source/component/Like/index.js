@@ -1,10 +1,9 @@
 
 import React, { Component } from 'react';
-import cx from 'classnames';
 import PropTypes from 'prop-types';
 
 import Styles from './styles.m.css';
-import {withProfile} from "../HOC/withProfile";
+import { withProfile } from "../HOC/withProfile";
 
 @withProfile
 export default class Like extends Component {
@@ -23,7 +22,7 @@ export default class Like extends Component {
     };
 
     static defaultProps = {
-        likes: false,
+        likes: [],
     };
 
     constructor (props) {
@@ -98,7 +97,7 @@ export default class Like extends Component {
 
         return (
             <section className = { Styles.like }>
-                <span className = { likersStyle } onClick = { this.likePost() }>
+                <span className = { likersStyle } onClick = { () => this.props.likePost(this.props.id) }>
                     Like
                 </span>
                 <div>
