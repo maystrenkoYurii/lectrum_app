@@ -7,10 +7,13 @@ export class Spinner extends Component {
     render () {
         const { avatar, currentUserFirstName, currentUserLastName } = this.props;
 
+        const user = `Привет ${currentUserFirstName} ${currentUserLastName}`;
+
         return (
             <div className = { Styles.postman }>
-                <img src = { avatar }>
+                <img src = { avatar } />
+                { user }
             </div>
-        )
+        );
     }
 }
