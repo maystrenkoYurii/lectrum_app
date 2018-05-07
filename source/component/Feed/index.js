@@ -17,7 +17,7 @@ import Catcher from '../../component/Catcher';
 
 import { Counter } from '../../component/CountPost';
 
-import { Spinner } from '../Spinner';
+import { Spinner } from '../Postman/index';
 import { fromTo } from 'gsap';
 
 export default class Feed extends Component {
@@ -181,6 +181,7 @@ export default class Feed extends Component {
     _handleComposerAppear = (composer) => {
         fromTo(composer, 1, { opacity: 0 }, { opacity: 1 });
     };
+
 
     _handleCounterAppear = (counter) => {
         fromTo(counter, 1, { x: 400, opacity: 0 }, { x: 0, opacity: 1 });
