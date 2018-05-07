@@ -17,8 +17,9 @@ import Catcher from '../../component/Catcher';
 
 import { Counter } from '../../component/CountPost';
 
-import { Spinner } from '../Postman/index';
+import { Spinner } from '../Spinner/index';
 import { fromTo } from 'gsap';
+import Postman from '../Postman';
 
 export default class Feed extends Component {
 
@@ -189,7 +190,7 @@ export default class Feed extends Component {
 
     render () {
         const { posts, isFetching } = this.state;
-        const { currentUserFirstName, currentUserLastName } = this.props;
+        const { currentUserFirstName, currentUserLastName, avatar } = this.props;
 
         const renderPost = posts.map((post) => (
             <CSSTransition
@@ -237,6 +238,11 @@ export default class Feed extends Component {
                     {renderPost}
                 </TransitionGroup>
                 <Spinner isSpinning = { isFetching } />
+                <Postman
+                    avatar = { avatar }
+                    currentUserFirstName = { currentUserFirstName }
+                    currentUserLastName = { currentUserLastName }
+                />
             </section>
         );
     }
