@@ -19,17 +19,21 @@ export default class Spinner extends Component {
     }
 
     componentDidMount () {
-       this.hello();
+        this.hello();
     }
 
     hello = () => {
-        if (!localStorage.getItem('firstEnters') || true) {
+        const firstEnters = localStorage.getItem('isHello') || false;
+
+        if (!firstEnters) {
             setTimeout(this.close, 4000);
+        } else {
+            this.close();
         }
     };
 
     close = () => {
-        localStorage.setItem('firstEnters', true);
+        localStorage.setItem('isHello', true);
         this.setState({ open: false });
     };
 
