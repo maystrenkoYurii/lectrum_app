@@ -19,16 +19,24 @@ export default class Spinner extends Component {
     }
 
     componentDidMount () {
-        setTimeout(this.close, 1000);
+       this.hello();
     }
 
+    hello = () => {
+        if (!localStorage.getItem('firstEnters') || true) {
+            setTimeout(this.close, 4000);
+        }
+    };
+
     close = () => {
+        localStorage.setItem('firstEnters', true);
         this.setState({ open: false });
     };
 
     render () {
 
-        const { avatar, currentUserFirstName, currentUserLastName, open } = this.props;
+        const { avatar, currentUserFirstName, currentUserLastName } = this.props;
+        const { open } = this.state;
 
         const hello = `Привет ${currentUserFirstName} ${currentUserLastName}`;
 
@@ -42,5 +50,5 @@ export default class Spinner extends Component {
         }
 
         return null;
-    };
+    }
 }
