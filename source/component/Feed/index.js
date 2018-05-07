@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Post from '../../component/Post';
 import Composer from '../../component/Composer';
 import StatusBar from '../../component/StatusBar';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { CSSTransition, TransitionGroup, Transition } from 'react-transition-group';
 
 import { api, TOKEN, GROUP_ID } from "../../config/api";
 import { socket } from '../../socket';
@@ -15,7 +15,10 @@ import animation from './animation.m.css';
 
 import Catcher from '../../component/Catcher';
 
-import CountPost from '../../component/CountPost';
+import { Counter } from '../../component/CountPost';
+
+import { Spinner } from '../Spinner';
+import { fromTo } from 'gsap';
 
 export default class Feed extends Component {
 
@@ -28,7 +31,8 @@ export default class Feed extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            posts: [],
+            posts:      [],
+            isFetching: false,
         };
         this.createPost = ::this._createPost;
         this.fetchPost = ::this._fetchPost;
@@ -65,8 +69,14 @@ export default class Feed extends Component {
         });
     }
 
+    _setPostsFetchingState = (state) => {
+        // this.setState({ isFetching: state });
+        this.setState(() => ({ isFetching: state }));
+    };
+
 
     _createPost = (comment) => {
+        this._setPostsFetchingState(true);
         fetch(api, {
             method: 'POST',
             headers: {
@@ -77,6 +87,7 @@ export default class Feed extends Component {
         })
             .then((response) => {
                 if (response.status !== 200) {
+                    this._setPostsFetchingState(false);
                     throw new Error('Fetch post failed');
                 }
 
@@ -87,11 +98,13 @@ export default class Feed extends Component {
                 this.setState(({ posts }) => ({
                     posts: [data, ...posts],
                 }));
+                this._setPostsFetchingState(false);
             });
     };
 
     async _createPostLike (id) {
         try {
+            this._setPostsFetchingState(true);
             const responce = await fetch(`${api}/${id}`, {
                 method: 'PUT',
                 headers: {
@@ -101,6 +114,7 @@ export default class Feed extends Component {
 
 
             if (responce.status !== 200) {
+                this._setPostsFetchingState(false);
                 throw new Error('Delete post filed');
             }
 
@@ -110,12 +124,14 @@ export default class Feed extends Component {
                 posts: posts.map((post) => post.id === id ? data : post),
             }));
         } catch (error) {
+            this._setPostsFetchingState(false);
             console.error(error);
         }
     }
 
     async _removePost (id) {
         try {
+            this._setPostsFetchingState(true);
             const responce = await fetch(`${api}/${id}`, {
                 method: 'DELETE',
                 headers: {
@@ -125,6 +141,7 @@ export default class Feed extends Component {
 
 
             if (responce.status !== 204) {
+                this._setPostsFetchingState(false);
                 throw new Error('Delete post filed');
             }
 
@@ -132,11 +149,13 @@ export default class Feed extends Component {
                 posts: posts.filter((post) => post.id !== id),
             }));
         } catch (error) {
+            this._setPostsFetchingState(false);
             console.error(error);
         }
     }
 
     _fetchPost () {
+        this._setPostsFetchingState(true);
         fetch(api)
             .then((response) => {
                 if (response.status !== 200) {
@@ -149,15 +168,26 @@ export default class Feed extends Component {
                 console.log(data);
                 this.setState(({ posts }) => ({
                     posts: [...data, ...posts],
+                    // isFetching: false
                 }));
+                this._setPostsFetchingState(false);
             })
             .catch((error) => {
+                this._setPostsFetchingState(false);
                 console.info(error);
             });
     }
 
+    _handleComposerAppear = (composer) => {
+        fromTo(composer, 1, { opacity: 0 }, { opacity: 1 });
+    };
+
+    _handleCounterAppear = (counter) => {
+        fromTo(counter, 1, { x: 400, opacity: 0 }, { x: 0, opacity: 1 });
+    };
+
     render () {
-        const { posts } = this.state;
+        const { posts, isFetching } = this.state;
         const { currentUserFirstName, currentUserLastName } = this.props;
 
         const renderPost = posts.map((post) => (
@@ -187,12 +217,25 @@ export default class Feed extends Component {
         return (
             <section className = { styles.feed }>
                 <StatusBar />
-                <Composer createPost = { this.createPost } />
-                <CountPost count = { renderPost.length } >
-                    <TransitionGroup>
-                        {renderPost}
-                    </TransitionGroup>
-                </CountPost>
+                <Transition
+                    appear
+                    in
+                    timeaut = { 100 }
+                    onEnter = { this._handleComposerAppear }>
+                    <Composer createPost = { this.createPost } />
+                </Transition>
+
+                <Transition
+                    appear
+                    in
+                    timeaut = { 100 }
+                    onEnter = { this._handleCounterAppear }>
+                    <Counter count = { renderPost.length } />
+                </Transition>
+                <TransitionGroup>
+                    {renderPost}
+                </TransitionGroup>
+                <Spinner isSpinning = { isFetching } />
             </section>
         );
     }

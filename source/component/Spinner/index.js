@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
-
-import createPortal from 'react-dom';
-
-import PropTypes from 'prop-types';
+import { createPortal } from 'react-dom';
 
 import Styles from './styles.m.css';
 
 const portal = document.getElementById('spinner');
 
-export default class Like extends Component {
+export class Spinner extends Component {
     render () {
-        const { isSpining } = this.props;
+        const { isSpinning } = this.props;
+        console.log(this.props);
 
         return createPortal(
-            isSpining ? <div className = { Styles.spinner } /> : null, portal
+            isSpinning ? <div className = { Styles.spinner } /> : null, portal
         );
     };
 }
