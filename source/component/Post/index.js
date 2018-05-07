@@ -9,13 +9,11 @@ import styles from './styles.m.css';
 export default class Post extends Component {
 
     static propTypes = {
-        avatar:               PropTypes.string.isRequired,
-        comment:              PropTypes.string.isRequired,
-        created:              PropTypes.number.isRequired,
-        currentUserFirstName: PropTypes.string.isRequired,
-        currentUserLastName:  PropTypes.string.isRequired,
-        firstName:            PropTypes.string.isRequired,
-        lastName:             PropTypes.string.isRequired,
+        avatar:    PropTypes.string.isRequired,
+        comment:   PropTypes.string.isRequired,
+        created:   PropTypes.number.isRequired,
+        firstName: PropTypes.string.isRequired,
+        lastName:  PropTypes.string.isRequired,
     };
 
     shouldComponentUpdate (nextProps) {
@@ -30,7 +28,7 @@ export default class Post extends Component {
     }
 
     render () {
-        const { avatar, currentUserFirstName, currentUserLastName, comment, created, firstName, lastName } = this.props;
+        const { avatar, comment, created, firstName, lastName } = this.props;
 
         const user = `${firstName} ${lastName}`;
 
