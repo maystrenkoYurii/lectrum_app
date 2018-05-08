@@ -50,7 +50,7 @@ export default class Spinner extends Component {
 
         console.log('XX ' + isHello);
 
-        if (isHello === false) {
+        if (!isHello) {
 
             console.log('XX ' + isHello);
             return (
