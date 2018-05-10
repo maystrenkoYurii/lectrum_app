@@ -3,7 +3,7 @@ export class LocalStorage {
         this.storage = {};
     }
 
-    clear() {
+    clear () {
         this.storage = {};
     }
 

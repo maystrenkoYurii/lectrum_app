@@ -5,7 +5,7 @@ import { withProfile } from '../HOC/withProfile';
 
 import styles from './styles.m.css';
 
-class Composer extends Component {
+export class Composer extends Component {
 
     static propTypes = {
         avatar:               PropTypes.string.isRequired,
@@ -16,7 +16,7 @@ class Composer extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            coment: 'coment',
+            coment: '',
         };
         this.changeComment = ::this._changeComment;
         this.handleSubmit = ::this._handleSubmit;
