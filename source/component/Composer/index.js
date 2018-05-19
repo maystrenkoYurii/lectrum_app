@@ -43,6 +43,7 @@ export class Composer extends Component {
     };
 
     _keyEnter = (event) => {
+        event.preventDefault();
         if (event.keyCode === 13) {
             this.handleSubmit(event);
         }

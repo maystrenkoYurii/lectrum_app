@@ -3,23 +3,31 @@ import React, { Component } from 'react';
 import { api, TOKEN, GROUP_ID } from "../../config/api";
 import { socket } from '../../socket';
 
+//Flux
+import { fetchPosts } from '../../flux/actions/actions';
+import dispatcher from '../../flux/dispatcher';
+import PostsStore from '../../flux/store';
+
 export const withApi = (Enchanced) =>
     class WithApi extends Component {
 
         constructor () {
             super();
             this.state = {
-                posts:      [],
+                posts:      PostsStore.getPosts(),
                 isFetching: false,
             };
             this.createPost = ::this._createPost;
             this.fetchPost = ::this._fetchPost;
             this.removePost = ::this._removePost;
             this.createPostLike = ::this._createPostLike;
+            this.handleStoreChange = ::this._handleStoreChange;
         }
 
         componentDidMount () {
             const { currentUserFirstName, currentUserLastName } = this.props;
+
+            PostsStore.subscribe(this.handleStoreChange);
 
             this.fetchPost();
 
@@ -45,6 +53,16 @@ export const withApi = (Enchanced) =>
                     }));
                 }
             });
+        }
+
+        componentWillUnmount () {
+            PostsStore.subscribe(this.handleStoreChange);
+        }
+
+        _handleStoreChange () {
+            this.setState(() => ({
+                posts: PostsStore.getPosts(),
+            }));
         }
 
         _setPostsFetchingState = (state) => {
@@ -117,9 +135,11 @@ export const withApi = (Enchanced) =>
 
                 const { data } = await responce.json();
 
-                this.setState(({ posts }) => ({
+                dispatcher.dispatch(fetchPosts(data));
+
+                /*this.setState(({ posts }) => ({
                     posts: [...data, ...posts],
-                }));
+                }));*/
                 this._setPostsFetchingState(false);
             } catch (error) {
                 this._setPostsFetchingState(false);
